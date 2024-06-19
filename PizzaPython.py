@@ -28,7 +28,7 @@ class Base(Pizza):
         self._name = name
     
     def get_cost(self):
-        return 45.0
+        return 50.0
 
     def get_ingredients(self):
         if self._type == PizzaType.SAVORY:
@@ -58,7 +58,7 @@ class IngredientDecorator(Pizza):
 # Decoradores Concretos
 class Queijo(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 4.0
+        return self._decorated_pizza.get_cost() + 10.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Queijo"
@@ -72,21 +72,21 @@ class Calabresa(IngredientDecorator):
 
 class Frango(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 5.0
+        return self._decorated_pizza.get_cost() + 6.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Frango"
     
 class Presunto(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 3.0
+        return self._decorated_pizza.get_cost() + 5.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Presunto"
     
 class Catupiry(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 2.0
+        return self._decorated_pizza.get_cost() + 4.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Catupiry"
@@ -118,46 +118,36 @@ class Manjericao(IngredientDecorator):
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Manjericão"
-    
-class Azeitona(IngredientDecorator):
-    def get_cost(self):
-        return self._decorated_pizza.get_cost()
 
-    def get_ingredients(self):
-        return self._decorated_pizza.get_ingredients() + ", Azeitona"
 
 class Chocolate(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 4.0
+        return self._decorated_pizza.get_cost() + 10.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + "Chocolate ao Leite"
 
 class Morango(IngredientDecorator):
     def get_cost(self):
-        return self._decorated_pizza.get_cost() + 3.0
+        return self._decorated_pizza.get_cost() + 5.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Morango"
-
-class MM(IngredientDecorator):
-    def get_cost(self):
-        return self._decorated_pizza.get_cost() + 1.0
-
-    def get_ingredients(self):
-        return self._decorated_pizza.get_ingredients() + ", MM"
           
 
 # interação com o usuário
 
 def select_pizza():
-    pizzas = [Azeitona(Manjericao(Tomate(Queijo(Base(PizzaType.SAVORY, "Marguerita"))))),
-              Azeitona(Cebola(Calabresa(Base(PizzaType.SAVORY, "Calabresa")))),
-              Azeitona(Cebola(Ovo(Presunto(Queijo(Base(PizzaType.SAVORY, "Portuguesa")))))),
-              Azeitona(Catupiry(Frango(Queijo(Base(PizzaType.SAVORY, "Frango"))))),
-              MM(Chocolate(Base(PizzaType.SWEET, "Chocolate com MM"))),
-              Morango(Chocolate(Base(PizzaType.SWEET, "Chocolate com Morango"))),
-              ]
+    pizzas = [
+            Cebola(Calabresa(Base(PizzaType.SAVORY, "Calabresa"))),
+            Manjericao(Tomate(Queijo(Base(PizzaType.SAVORY, "Marguerita")))),
+            Frango(Queijo(Base(PizzaType.SAVORY, "Frango"))),
+            Cebola(Ovo(Presunto(Queijo(Base(PizzaType.SAVORY, "Portuguesa"))))),
+            Cebola(Ovo(Calabresa(Queijo(Base(PizzaType.SAVORY, "Baiana"))))),
+            Catupiry(Frango(Queijo(Base(PizzaType.SAVORY, "Frango Especial")))),
+            Chocolate(Base(PizzaType.SWEET, "Chocolate")),
+            Morango(Chocolate(Base(PizzaType.SWEET, "Chocolate Especial"))),
+            ]
     
     print("\nSelecione uma opção:")
     k = 1
