@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from enum import Enum
 
 # Componente (Classe Base Abstrata)
 class Pizza(ABC):
@@ -14,6 +15,11 @@ class Pizza(ABC):
     def get_name(self):
         pass
 
+
+class PizzaType(Enum):
+    SAVORY = "savory"
+    SWEET = "sweet"
+
 # ComponenteConcreto (Implementação da Classe Base)
 class Base(Pizza):
     def __init__(self, pType, name):
@@ -25,9 +31,9 @@ class Base(Pizza):
         return 45.0
 
     def get_ingredients(self):
-        if self._type == "salgada":
+        if self._type == PizzaType.SAVORY:
             return "Molho de Tomate"
-        else:
+        elif self._type == PizzaType.SWEET:
             return ""
     
     def get_name(self):
@@ -37,13 +43,15 @@ class Base(Pizza):
 class IngredientDecorator(Pizza):
     def __init__(self, pizza):
         self._decorated_pizza = pizza
-
-    def get_cost(self):
-        return self._decorated_pizza.get_cost()
-
-    def get_ingredients(self):
-        return self._decorated_pizza.get_ingredients()
     
+    @abstractmethod
+    def get_cost(self):
+        pass
+
+    @abstractmethod
+    def get_ingredients(self):
+        pass
+
     def get_name(self):
         return self._decorated_pizza.get_name()
 
@@ -143,12 +151,12 @@ class MM(IngredientDecorator):
 # interação com o usuário
 
 def select_pizza():
-    pizzas = [Azeitona(Manjericao(Tomate(Queijo(Base("salgada", "Marguerita"))))),
-              Azeitona(Cebola(Calabresa(Base("salgada", "Calabresa")))),
-              Azeitona(Catupiry(Frango(Queijo(Base("salgada", "Frango"))))),
-              Azeitona(Cebola(Ovo(Presunto(Queijo(Base("salgada", "Portuguesa")))))),
-              Morango(Chocolate(Base("doce", "Chocolate com Morango"))),
-              MM(Chocolate(Base("doce", "Chocolate com MM")))
+    pizzas = [Azeitona(Manjericao(Tomate(Queijo(Base(PizzaType.SAVORY, "Marguerita"))))),
+              Azeitona(Cebola(Calabresa(Base(PizzaType.SAVORY, "Calabresa")))),
+              Azeitona(Cebola(Ovo(Presunto(Queijo(Base(PizzaType.SAVORY, "Portuguesa")))))),
+              Azeitona(Catupiry(Frango(Queijo(Base(PizzaType.SAVORY, "Frango"))))),
+              MM(Chocolate(Base(PizzaType.SWEET, "Chocolate com MM"))),
+              Morango(Chocolate(Base(PizzaType.SWEET, "Chocolate com Morango"))),
               ]
     
     print("\nSelecione uma opção:")
@@ -176,6 +184,7 @@ def main():
     print("--------------------------------------------------")
     print("Bem vindo(a) à Pizzaria em Python!")
     print("--------------------------------------------------")
+    
     pizzaList = ''
     totalCost = 0.0
 
@@ -197,12 +206,10 @@ def main():
                     except Exception as error:
                         print(f'{error}')
                     break
-
-                    
                 elif option == 2:
                     print("\nPedido finalizado!")
                     print("pizzas: ", pizzaList)
-                    print("preço: R$", totalCost)
+                    print("preço: R$", round(totalCost, 2))
                     return
                 elif option == 3:
                     print("Saindo...")
