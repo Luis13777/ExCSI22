@@ -14,10 +14,6 @@ class Pizza(ABC):
     def get_name(self):
         pass
 
-    @abstractmethod
-    def get_type(self):
-        pass
-
 # ComponenteConcreto (Implementação da Classe Base)
 class Base(Pizza):
     def __init__(self, pType, name):
@@ -37,11 +33,8 @@ class Base(Pizza):
     def get_name(self):
         return self._name
 
-    def get_type(self):
-        return self._type
-
 # Decorador (Classe Base)
-class ingredientDecorator(Pizza):
+class IngredientDecorator(Pizza):
     def __init__(self, pizza):
         self._decorated_pizza = pizza
 
@@ -54,95 +47,92 @@ class ingredientDecorator(Pizza):
     def get_name(self):
         return self._decorated_pizza.get_name()
 
-    def get_type(self):
-        return self._decorated_pizza.get_type()
-
 # Decoradores Concretos
-class Queijo(ingredientDecorator):
+class Queijo(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 4.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Queijo"
 
-class Calabresa(ingredientDecorator):
+class Calabresa(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 5.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Calabresa"
 
-class Frango(ingredientDecorator):
+class Frango(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 5.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Frango"
     
-class Presunto(ingredientDecorator):
+class Presunto(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 3.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Presunto"
     
-class Catupiry(ingredientDecorator):
+class Catupiry(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 2.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Catupiry"
     
-class Ovo(ingredientDecorator):
+class Ovo(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 1.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Ovo"
 
-class Tomate(ingredientDecorator):
+class Tomate(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost()
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Tomate"
 
-class Cebola(ingredientDecorator):
+class Cebola(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() 
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Cebola"
 
-class Manjericao(ingredientDecorator):
+class Manjericao(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost()
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Manjericão"
     
-class Azeitona(ingredientDecorator):
+class Azeitona(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost()
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Azeitona"
 
-class Chocolate(ingredientDecorator):
+class Chocolate(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 4.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + "Chocolate ao Leite"
 
-class Morango(ingredientDecorator):
+class Morango(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 3.0
 
     def get_ingredients(self):
         return self._decorated_pizza.get_ingredients() + ", Morango"
 
-class MM(ingredientDecorator):
+class MM(IngredientDecorator):
     def get_cost(self):
         return self._decorated_pizza.get_cost() + 1.0
 
@@ -164,7 +154,7 @@ def select_pizza():
     print("\nSelecione uma opção:")
     k = 1
     for pizza in pizzas:
-        print(str(k) + ". " + pizza.get_name() + " (" + pizza.get_ingredients() + ") R$ " + str(pizza.get_cost()))
+        print(str(k) + ". " + pizza.get_name() + " (" + pizza.get_ingredients() + ") R$", round(pizza.get_cost(), 2))
         k += 1
 
     while True:
@@ -190,9 +180,6 @@ def main():
     totalCost = 0.0
 
     while True:
-        print("\npizzas adicionadas: ", pizzaList)
-        print("preço: R$ ", totalCost)
-      
         print("\nSelecione uma opção:")
         print("1. Adicionar Pizza")
         print("2. Finalizar pedido")
@@ -226,6 +213,8 @@ def main():
             except (ValueError, TypeError):
                 print("Entrada inválida! Tente novamente.")
 
+        print("\npizzas adicionadas:", pizzaList)
+        print("preço: R$", round(totalCost, 2))
 
 
 if __name__ == "__main__":
