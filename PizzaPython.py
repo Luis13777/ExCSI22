@@ -138,7 +138,7 @@ class Morango(IngredientDecorator):
 # interação com o usuário
 
 def select_pizza():
-    pizzas = [
+    menu = [
             Cebola(Calabresa(Base(PizzaType.SAVORY, "Calabresa"))),
             Manjericao(Tomate(Queijo(Base(PizzaType.SAVORY, "Marguerita")))),
             Frango(Queijo(Base(PizzaType.SAVORY, "Frango"))),
@@ -151,7 +151,7 @@ def select_pizza():
     
     print("\nSelecione uma opção:")
     k = 1
-    for pizza in pizzas:
+    for pizza in menu:
         print(str(k) + ". " + pizza.get_name() + " (" + pizza.get_ingredients() + ") R$", round(pizza.get_cost(), 2))
         k += 1
 
@@ -159,9 +159,9 @@ def select_pizza():
         try:
             option = int(input("Opção: "))
 
-            if option >= 1 and option <= len(pizzas):
-                name = pizzas[option - 1].get_name()
-                cost = pizzas[option - 1].get_cost()
+            if option >= 1 and option <= len(menu):
+                name = menu[option - 1].get_name()
+                cost = menu[option - 1].get_cost()
                 return name, cost
             else:
                 print("Opção não existe! Tente novamente.")
